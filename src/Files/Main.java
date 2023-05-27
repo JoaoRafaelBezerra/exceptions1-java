@@ -1,25 +1,30 @@
 package Files;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 
-public class Main {// Escrevendo com bufferedWritter e fileWriter
+import java.io.File;
+import java.util.Scanner;
+
+public class Main {//Listing and creating files/folders
 
 	public static void main(String[] args) {
 		
-		String[] lines = new String[] { "Goodi morning", "good naite ", "good evening"};
-		String path = "C:\\Users\\lnbre\\disgraca.txt";
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter fil/folder path: ");
+		String strPath = sc.nextLine();
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
-		    
-		    for(String line : lines) {
-		    	bw.write(line);
-		    	bw.newLine();
-		    }
-		}catch(IOException e){
-	    	System.out.println("Error: " + e.getMessage());
-	    }
+		File path = new File(strPath);
+		
+		File[] folders = path.listFiles(File::isDirectory);
+		System.out.println("Folders: ");
+		for(File folder : folders) {
+			System.out.println(folder);
+		}
+		File[] files = path.listFiles(File::isFile);
+		System.out.println("Files: ");
+		for(File file : files) {
+			System.out.println(file);
+		}
+		boolean success = new File(strPath + "//subdir").mkdir();
 	}
 }
 
