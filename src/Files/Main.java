@@ -1,23 +1,21 @@
 package Files;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
-public class Main {// Leitura com  FileReader e BufferedReader
+public class Main {// Escrevendo com bufferedWritter e fileWriter
 
 	public static void main(String[] args) {
 		
+		String[] lines = new String[] { "Goodi morning", "good naite ", "good evening"};
 		String path = "C:\\Users\\lnbre\\disgraca.txt";
-		 
 		
-		try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
 		    
-		    String line = br.readLine();
-		    
-		    while(line != null) {
-		    	System.out.println(line);
-		    	line = br.readLine();
+		    for(String line : lines) {
+		    	bw.write(line);
+		    	bw.newLine();
 		    }
 		}catch(IOException e){
 	    	System.out.println("Error: " + e.getMessage());
