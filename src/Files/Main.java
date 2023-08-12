@@ -1,24 +1,41 @@
 package Files;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
-import Services.Client;
+import Services.Product;
 
-public class Main {//Listing and creating files/folders
+public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {//Comparator
 		
 		Scanner sc = new Scanner(System.in);
 		
-		Client client1 = new Client("Maria", "Maria@hamilc.com");
-		Client client2 = new Client("Maria", "Maria@hamilc.com");
+		List<Product> list = new ArrayList<>();
 		
-		System.out.println(client1.hashCode());
-		System.out.println(client2.hashCode());
-		System.out.println(client1.equals(client2));
-		System.out.println(client1 == client2);
-	
+		list.add(new Product("TV",100.0));
+		list.add(new Product("Tablet",1000.0));
+		list.add(new Product("PS5",50000.0));
+		
+		//Comparator<Product> comp = (p1,p2) -> p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
+		
+		/*Comparator<Product> comp = new Comparator<Product>() {
+
+			@Override
+			public int compare(Product p1, Product p2) {
+				
+				return p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
+			}
+			
+		};*/
+		
+		list.sort((p1,p2) -> p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase()));
+		for(Product p : list) {
+			System.out.println(p);
+		}
+		
 	}
 }
-
 
