@@ -27,17 +27,17 @@ public class Product {
 		this.price = price;
 	}
 	
-	public static boolean staticProductPredicate(Product p) {
-		return p.getPrice() >= 100.0;
+	public static void staticProductUpdate(Product p) {
+		p.setPrice(p.getPrice() * 1.1);
 	}
 	
-	public boolean nonStaticProductPredicate() {
-		return price >= 100.0;
+	public void nonStaticProductUpdate() {
+		price = price * 1.1;
 	}
 	
 	@Override
 	public String toString() {
-		return "Product [name = " + name + ", price = " + price + "]";
+		return "Product [name = " + name + ", price = " + String.format("%.2f",price) + "]";
 	}
 	
 	
