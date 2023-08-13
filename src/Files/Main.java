@@ -1,12 +1,11 @@
 package Files;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import Services.Product;
+
 
 public class Main {
 
@@ -14,23 +13,20 @@ public class Main {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		List<Product> list = new ArrayList<>();
+		List<Integer> list = Arrays.asList(2,3,4,5,6,7,8,8,9,0);
 		
-		list.add(new Product("TV", 10000.00));
-		list.add(new Product("Iphone", 4320.00));
-		list.add(new Product("Java EE", 234.00));
-		list.add(new Product("bosta liquida", 2.00));
+		Stream<Integer> st1 = list.stream().map(x -> x * 10);
 		
-		Function<Product, String> func = p ->  p.getName().toUpperCase();
+		System.out.println(Arrays.toString(st1.toArray()));
 		
-		//List<String> names = list.stream().map(new UpperCaseName()).collect(Collectors.toList());
-		//List<String> names = list.stream().map(Product::staticToUppercase).collect(Collectors.toList());
-		//List<String> names = list.stream().map(Product::nonStaticToUppercase).collect(Collectors.toList());
-		//List<String> names = list.stream().map(func).collect(Collectors.toList());
-		List<String> names = list.stream().map(p ->  p.getName().toUpperCase()).collect(Collectors.toList());
+		Stream<String> st2 = Stream.of("MAria","Fernando","Xabude");
+		System.out.println(Arrays.toString(st2.toArray()));
 		
-		names.forEach(System.out::println);
+		Stream<Integer> st3 = Stream.iterate(2, x -> x + 2);
+		System.out.println(Arrays.toString(st3.limit(10).toArray()));
 		
+		Stream<Long> st4 = Stream.iterate(new Long[] {0L, 1L}, p -> new Long[] {p[1], p[0]+p[1]}).map(p -> p[0]);
+		System.out.println(Arrays.toString(st4.limit(5).toArray()));
 	}
 
 	
