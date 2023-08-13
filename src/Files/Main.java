@@ -1,9 +1,17 @@
 package Files;
 
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
-import java.util.stream.Stream;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import Entities.Employee;
 
 
 
@@ -11,22 +19,49 @@ public class Main {
 
 	public static void main(String[] args) {//Map
 		
+		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		
-		List<Integer> list = Arrays.asList(2,3,4,5,6,7,8,8,9,0);
 		
-		Stream<Integer> st1 = list.stream().map(x -> x * 10);
+		String path = "C:\\Users\\text.txt";
 		
-		System.out.println(Arrays.toString(st1.toArray()));
-		
-		Stream<String> st2 = Stream.of("MAria","Fernando","Xabude");
-		System.out.println(Arrays.toString(st2.toArray()));
-		
-		Stream<Integer> st3 = Stream.iterate(2, x -> x + 2);
-		System.out.println(Arrays.toString(st3.limit(10).toArray()));
-		
-		Stream<Long> st4 = Stream.iterate(new Long[] {0L, 1L}, p -> new Long[] {p[1], p[0]+p[1]}).map(p -> p[0]);
-		System.out.println(Arrays.toString(st4.limit(5).toArray()));
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+
+			List<Employee> list = new ArrayList<>();
+			
+			String line = br.readLine();
+			while (line != null) {
+				String[] fields = line.split(",");
+				list.add(new Employee(fields[0], fields[1],Double.parseDouble(fields[2])));
+				line = br.readLine();
+			}
+			
+			System.out.print("Enter Salary: ");
+			double value = sc.nextDouble();
+			System.out.println("Email of people whose salary is more than " + String.format("%.2f", value) + ":");
+			
+			
+			Comparator<String> comp = (s1, s2) -> s1.toUpperCase().compareTo(s2.toUpperCase());
+			
+			List<String> names = list.stream()
+					.filter(p -> p.getSalary() > value)
+					.map(p -> p.getEmail()).sorted(comp)
+					.collect(Collectors.toList());
+			
+			names.forEach(System.out::println);
+			
+			double sum = list.stream()
+					.filter(x -> x.getName().charAt(0) == 'M')
+					.map(x -> x.getSalary())
+					.reduce(0.0, (x, y) -> x + y);
+			
+			System.out.println("Sum of salary from people whose name starts with 'M': " + String.format("%.2f", sum));
+			
+			
+		} catch (IOException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		sc.close();
 	}
 
 	
