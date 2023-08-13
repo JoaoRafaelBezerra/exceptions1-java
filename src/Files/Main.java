@@ -3,13 +3,14 @@ package Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import Services.Product;
 
 public class Main {
 
-	public static void main(String[] args) {//Consumer
+	public static void main(String[] args) {//Map
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -20,18 +21,16 @@ public class Main {
 		list.add(new Product("Java EE", 234.00));
 		list.add(new Product("bosta liquida", 2.00));
 		
-		double factor = 1.1;
-		Consumer<Product> cons = p -> {
-			p.setPrice(p.getPrice() * factor);
-		};
+		Function<Product, String> func = p ->  p.getName().toUpperCase();
 		
-		//list.forEach(new PriceUpdate());
-		//list.forEach(Product::staticProductUpdate);
-		//list.forEach(Product::nonStaticProductUpdate);
-		//list.forEach(cons);
-		list.forEach(p -> p.setPrice(p.getPrice() * factor));
+		//List<String> names = list.stream().map(new UpperCaseName()).collect(Collectors.toList());
+		//List<String> names = list.stream().map(Product::staticToUppercase).collect(Collectors.toList());
+		//List<String> names = list.stream().map(Product::nonStaticToUppercase).collect(Collectors.toList());
+		//List<String> names = list.stream().map(func).collect(Collectors.toList());
+		List<String> names = list.stream().map(p ->  p.getName().toUpperCase()).collect(Collectors.toList());
 		
-		list.forEach(System.out::println);
+		names.forEach(System.out::println);
+		
 	}
 
 	
